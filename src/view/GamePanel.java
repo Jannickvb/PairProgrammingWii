@@ -3,15 +3,12 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.renderable.RenderableImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -19,15 +16,19 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import wiiusej.Wiimote;
 import controller.RemoteController;
 
 public class GamePanel extends JPanel implements ActionListener{
 	
+	private static final long serialVersionUID = 1L;
+	private GameFrame frame;
 	BufferedImage background;
 	int screenHeight;
 	ArrayList<Shape> shapes = new ArrayList<Shape>();
 	RemoteController rem;
-	public GamePanel()
+	Wiimote[] wiimotes = rem.getWiiMotes();
+	public GamePanel(GameFrame frame)
 	{
 		rem = RemoteController.instance;
 		this.screenHeight = 560;
@@ -35,7 +36,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		Timer timer = new Timer(1000/20, this);
 		timer.start();
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -44,10 +45,54 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	public void paintComponent(Graphics g)
 	{
+		//super.paintComponent(g);
+		//Graphics2D g2 = (Graphics2D) g;
+		//g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		//drawShapes(g2);
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		drawShapes(g2);
+		AffineTransform tx = new AffineTransform();
+		tx.translate(frame.getWidth()/2,(frame.getHeight()/2)-25);
+		g2.transform(tx);
+		g2.drawLine(0, -frame.getHeight()/2, 0, frame.getHeight()/2);
+		g2.drawLine(-frame.getWidth()/2,0,frame.getWidth()/2,0);
+		if(rem.getListener().getColor() == 4)
+		{
+			g2.setColor(Color.BLACK);
+		}
+		else
+		{
+			g2.setColor(Color.BLUE);
+		}
+		g2.fillRect(0, 0, 100, 100);
+		if(rem.getListener().getColor() == 3)
+		{
+			g2.setColor(Color.BLACK);
+		}
+		else
+		{
+			g2.setColor(Color.YELLOW);
+		}
+		g2.fillRect(-100, 0, 100, 100);
+		if(rem.getListener().getColor() == 1)
+		{
+			g2.setColor(Color.BLACK);
+		}
+		else
+		{
+			g2.setColor(Color.RED);
+		}
+		g2.fillRect(0, -100, 100, 100);
+		if(rem.getListener().getColor() == 4)
+		{
+			g2.setColor(Color.BLACK);
+		}
+		else
+		{
+			g2.setColor(Color.GREEN);
+		}
+		g2.fillRect(-100, -100, 100, 100);
+		
 //		drawForeground(g2);
 	}
 	public void drawShapes(Graphics2D g2)

@@ -6,6 +6,7 @@ import wiiusej.Wiimote;
 public class RemoteController {
 
 	Wiimote[] wiimote;
+	MyWiiListener wiilistener;
 	public static final RemoteController instance = new RemoteController();
 	
 	public RemoteController(){
@@ -15,5 +16,10 @@ public class RemoteController {
 	
 	public Wiimote[] getWiiMotes(){
 		return wiimote;
+	}
+	
+	public MyWiiListener getListener()
+	{
+		return wiilistener;
 	}
 }

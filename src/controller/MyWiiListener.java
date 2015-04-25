@@ -1,5 +1,7 @@
 package controller;
 
+import wiiusej.WiiUseApiManager;
+import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.JoystickEvent;
@@ -18,6 +20,36 @@ import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class MyWiiListener implements WiimoteListener{
+	
+	private Wiimote[] wiimotes;
+	private int color;
+	
+	public MyWiiListener()
+	{
+		this.wiimotes = WiiUseApiManager.getWiimotes(1, true);
+		for(int i = 0; i < wiimotes.length; i++)
+		{
+			wiimotes[i].activateIRTRacking();
+			wiimotes[i].activateMotionSensing();
+			wiimotes[i].addWiiMoteEventListeners(this);
+			switch(i)
+			{
+			case 0:
+				wiimotes[i].setLeds(true, false, false, false);
+				break;
+			case 1:
+				wiimotes[i].setLeds(false, true, false, false);
+				break;
+			case 2:
+				wiimotes[i].setLeds(false, false, true, false);
+				break;
+			case 3:
+				wiimotes[i].setLeds(false, false, false, true);
+				break;
+			}
+		}
+		this.color = 0;
+	}
 
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent e) {
@@ -54,20 +86,48 @@ public class MyWiiListener implements WiimoteListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public int getColor()
+	{
+		return color;
+	}
 
 	@Override
 	public void onExpansionEvent(ExpansionEvent e) {
 		if(e instanceof NunchukEvent){
 			NunchukEvent nunchuck = (NunchukEvent) e;
-			NunchukButtonsEvent buttons = nunchuck.getButtonsEvent();
 			JoystickEvent joystick = nunchuck.getNunchukJoystickEvent();
 			if(joystick.getMagnitude() > 0.3)
-				System.out.println(joystick.getAngle());
-			if(buttons.isButtonCJustPressed())
-				System.out.println("C: true");
-			if(buttons.isButtonZJustPressed())
-				System.out.println("Z: true");
+			{
+				if(joystick.getMagnitude() > 0.3)
+            {
+            	if(joystick.getAngle() > 0 && joystick.getAngle() < 90)
+            	{
+            		System.out.println("rood");
+            		color = 1;
+            	}
+            	if(joystick.getAngle() > 90 && joystick.getAngle() < 180)
+            	{
+            		System.out.println("blauw");
+            		color = 2;
+            	}
+            	if(joystick.getAngle() > 180 && joystick.getAngle() < 270)
+            	{
+            		System.out.println("geel");
+            		color = 3;
+            	}
+            	if(joystick.getAngle() > 270 && joystick.getAngle() < 360)
+            	{
+            		System.out.println("groen");
+            		color = 4;
+            	}
+            }
+            else
+            {
+            	color = 0;
+            }
 		}
+	}
 	}
 
 	@Override

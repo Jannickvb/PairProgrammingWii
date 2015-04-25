@@ -61,6 +61,12 @@ public class MyWiiListener implements WiimoteListener{
 			NunchukEvent nunchuck = (NunchukEvent) e;
 			NunchukButtonsEvent buttons = nunchuck.getButtonsEvent();
 			JoystickEvent joystick = nunchuck.getNunchukJoystickEvent();
+			if(joystick.getMagnitude() > 0.3)
+				System.out.println(joystick.getAngle());
+			if(buttons.isButtonCJustPressed())
+				System.out.println("C: true");
+			if(buttons.isButtonZJustPressed())
+				System.out.println("Z: true");
 		}
 	}
 

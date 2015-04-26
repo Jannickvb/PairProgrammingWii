@@ -26,7 +26,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	RemoteController rem;
 	GameController gameControl;
 	GameStateManager gsm;
-	SimonSays simon;
 	public GamePanel(GameFrame frame)
 	{
 		gameControl = GameController.instance;
@@ -34,11 +33,9 @@ public class GamePanel extends JPanel implements ActionListener{
 		this.frame = frame;
 		this.rem = frame.getRemoteController();
 		this.gsm = frame.getGameStateManager();
-		simon = new SimonSays(frame);
 		
-		Timer timer = new Timer(1000/20, this);
+		Timer timer = new Timer(1000/60, this);
 		timer.start();
-		
 		
 	}
 
@@ -46,6 +43,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e)
 	{
 		repaint();
+		gsm.getGameState().update();
 	}
 	
 	public void paintComponent(Graphics g)
@@ -59,6 +57,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	public GameFrame getFrame(){
 		return frame;
 	}
+	
 	
 	BufferedImage loadImage(String fileName)
 	{

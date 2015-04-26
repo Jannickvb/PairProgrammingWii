@@ -1,6 +1,9 @@
 package controller;
 
-import wiiusej.WiiUseApiManager;
+import java.awt.geom.Point2D;
+
+import model.Accelerometer;
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
@@ -27,30 +30,7 @@ public class MyWiiListener implements WiimoteListener{
 	public MyWiiListener(GameStateManager gsm)
 	{
 		gameControl = GameController.instance;
-		this.gsm = gsm;
-//		this.wiimotes = WiiUseApiManager.getWiimotes(1, true);
-//		for(int i = 0; i < wiimotes.length; i++)
-//		{
-//			wiimotes[i].activateIRTRacking();
-//			wiimotes[i].activateMotionSensing();
-//			wiimotes[i].addWiiMoteEventListeners(this);
-//			switch(i)
-//			{
-//			case 0:
-//				wiimotes[i].setLeds(true, false, false, false);
-//				break;
-//			case 1:
-//				wiimotes[i].setLeds(false, true, false, false);
-//				break;
-//			case 2:
-//				wiimotes[i].setLeds(false, false, true, false);
-//				break;
-//			case 3:
-//				wiimotes[i].setLeds(false, false, false, true);
-//				break;
-//			}
-//		}
-		
+		this.gsm = gsm;		
 	}
 
 	@Override
@@ -94,12 +74,18 @@ public class MyWiiListener implements WiimoteListener{
 		if(e instanceof NunchukEvent)
 		{
 			NunchukEvent nunchuck = (NunchukEvent) e;
+			NunchukButtonsEvent nunButtons = nunchuck.getButtonsEvent();
 			JoystickEvent joystick = nunchuck.getNunchukJoystickEvent();
+			MotionSensingEvent motion = nunchuck.getNunchukMotionSensingEvent();
+			gameControl.setRoll((int)motion.getOrientation().getRoll());
+			gameControl.setMagnitude(joystick.getMagnitude());
 			if(joystick.getMagnitude() > 0.3)
 			{
 				gameControl.setAngle((int)joystick.getAngle());
-				gameControl.setMagnitude((int)joystick.getMagnitude());
 			}
+			if(nunButtons.isButtonCJustPressed())
+				gameControl.toggleRotation();
+				
 		}
 	}
 
@@ -123,9 +109,13 @@ public class MyWiiListener implements WiimoteListener{
 
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(gsm.getGameState() instanceof Accelerometer){
+			gameControl.getX().add(new Point2D.Double(gameControl.getYSpeed(), e.getRawAcceleration().getX()-130));	
+			gameControl.getY().add(new Point2D.Double(gameControl.getYSpeed(), e.getRawAcceleration().getY()-130));	
+			gameControl.getZ().add(new Point2D.Double(gameControl.getYSpeed(), e.getRawAcceleration().getZ()-130));	
+		}
 	}
+		
 
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent e) {

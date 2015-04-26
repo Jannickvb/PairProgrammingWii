@@ -10,6 +10,7 @@ import controller.GameController;
 public class SimonSays extends GameState{
 	private GameFrame frame;
 	private GameController gameControl;
+	private Color color;
 	public SimonSays(GameFrame frame){
 		super(frame);
 		gameControl = GameController.instance;
@@ -24,7 +25,7 @@ public class SimonSays extends GameState{
 		g2.transform(tx);
 		g2.drawLine(0, -frame.getHeight()/2, 0, frame.getHeight()/2);
 		g2.drawLine(-frame.getWidth()/2,0,frame.getWidth()/2,0);
-		if(gameControl.getColor() == 2)
+		if(gameControl.getRekt() == 2)
 		{
 			g2.setColor(Color.BLACK);
 		}
@@ -33,7 +34,7 @@ public class SimonSays extends GameState{
 			g2.setColor(Color.BLUE);
 		}
 		g2.fillRect(0, 0, 100, 100);
-		if(gameControl.getColor() == 3)
+		if(gameControl.getRekt() == 3)
 		{
 			g2.setColor(Color.BLACK);
 		}
@@ -42,7 +43,7 @@ public class SimonSays extends GameState{
 			g2.setColor(Color.YELLOW);
 		}
 		g2.fillRect(-100, 0, 100, 100);
-		if(gameControl.getColor() == 1)
+		if(gameControl.getRekt() == 1)
 		{
 			g2.setColor(Color.BLACK);
 		}
@@ -51,7 +52,7 @@ public class SimonSays extends GameState{
 			g2.setColor(Color.RED);
 		}
 		g2.fillRect(0, -100, 100, 100);
-		if(gameControl.getColor() == 4)
+		if(gameControl.getRekt() == 4)
 		{
 			g2.setColor(Color.BLACK);
 		}
@@ -60,6 +61,12 @@ public class SimonSays extends GameState{
 			g2.setColor(Color.GREEN);
 		}
 		g2.fillRect(-100, -100, 100, 100);
+		
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
 		
 	}
 }

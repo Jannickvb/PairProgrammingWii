@@ -12,8 +12,10 @@ public class RemoteController {
 	public RemoteController(GameFrame frame){
 		this.gsm = frame.getGameStateManager();
 		wiimote = WiiUseApiManager.getWiimotes(4, true);
-		for(int i = 0;i<wiimote.length;i++)
+		for(int i = 0;i<wiimote.length;i++){
 			wiimote[i].addWiiMoteEventListeners(new MyWiiListener(gsm));
+			wiimote[i].activateMotionSensing();
+			}
 		if(wiimote.length == 0)
 			System.out.println("NO CONTROLLER CONNECTED");
 	}

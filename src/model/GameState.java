@@ -10,4 +10,5 @@ public abstract class GameState {
 		this.frame = frame;
 	}
 	public abstract void draw(Graphics2D g2);
+	public abstract void update();
 }

@@ -6,13 +6,9 @@ import java.util.ArrayList;
 public class GameController {
 	
 	public final static GameController instance = new GameController();
-	private ArrayList<Color> userInput = new ArrayList<>();
-	private int angle,color;
+	private int angle,color,magnitude;
 	public GameController(){
-		userInput.add(Color.red);
-		userInput.add(Color.yellow);
-		userInput.add(Color.blue);
-		userInput.add(Color.green);
+		
 	}
 	
 	public int getColor(){
@@ -40,8 +36,8 @@ public class GameController {
 		return color;
 	}
 	
-	public ArrayList<Color> getUserInput(){
-		return userInput;
+	public void setMagnitude(int magnitude){
+		this.magnitude = magnitude;
 	}
 	
 	public void setAngle(int angle){

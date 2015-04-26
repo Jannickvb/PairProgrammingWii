@@ -98,6 +98,7 @@ public class MyWiiListener implements WiimoteListener{
 			if(joystick.getMagnitude() > 0.3)
 			{
 				gameControl.setAngle((int)joystick.getAngle());
+				gameControl.setMagnitude((int)joystick.getMagnitude());
 			}
 		}
 	}

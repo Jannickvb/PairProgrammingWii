@@ -3,6 +3,7 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 import view.GameFrame;
 import controller.GameController;
@@ -11,6 +12,9 @@ public class SimonSays extends GameState{
 	private GameFrame frame;
 	private GameController gameControl;
 	private Color color;
+	private ArrayList<Color> simon;
+	private ArrayList<Integer> userInput;
+	private ArrayList<Integer> gameInput;
 	public SimonSays(GameFrame frame){
 		super(frame);
 		gameControl = GameController.instance;

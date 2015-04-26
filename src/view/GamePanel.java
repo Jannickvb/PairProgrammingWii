@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import wiiusej.Wiimote;
+import controller.GameController;
 import controller.RemoteController;
 
 public class GamePanel extends JPanel implements ActionListener{
@@ -27,10 +28,14 @@ public class GamePanel extends JPanel implements ActionListener{
 	int screenHeight;
 	ArrayList<Shape> shapes = new ArrayList<Shape>();
 	RemoteController rem;
-	Wiimote[] wiimotes = rem.getWiiMotes();
+	GameController gameControl;
+	Wiimote[] wiimotes;
 	public GamePanel(GameFrame frame)
 	{
 		rem = RemoteController.instance;
+		gameControl = GameController.instance;
+		this.frame = frame;
+		wiimotes =  rem.getWiiMotes();
 		this.screenHeight = 560;
 		background = loadImage("images/background.png");
 		Timer timer = new Timer(1000/20, this);
@@ -56,7 +61,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		g2.transform(tx);
 		g2.drawLine(0, -frame.getHeight()/2, 0, frame.getHeight()/2);
 		g2.drawLine(-frame.getWidth()/2,0,frame.getWidth()/2,0);
-		if(rem.getListener().getColor() == 4)
+		if(gameControl.getColor() == 2)
 		{
 			g2.setColor(Color.BLACK);
 		}
@@ -65,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			g2.setColor(Color.BLUE);
 		}
 		g2.fillRect(0, 0, 100, 100);
-		if(rem.getListener().getColor() == 3)
+		if(gameControl.getColor() == 3)
 		{
 			g2.setColor(Color.BLACK);
 		}
@@ -74,7 +79,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			g2.setColor(Color.YELLOW);
 		}
 		g2.fillRect(-100, 0, 100, 100);
-		if(rem.getListener().getColor() == 1)
+		if(gameControl.getColor() == 1)
 		{
 			g2.setColor(Color.BLACK);
 		}
@@ -83,7 +88,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			g2.setColor(Color.RED);
 		}
 		g2.fillRect(0, -100, 100, 100);
-		if(rem.getListener().getColor() == 4)
+		if(gameControl.getColor() == 4)
 		{
 			g2.setColor(Color.BLACK);
 		}

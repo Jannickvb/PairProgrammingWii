@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.JDialog;
+
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 
@@ -10,8 +12,9 @@ public class RemoteController {
 	public static final RemoteController instance = new RemoteController();
 	
 	public RemoteController(){
-		wiimote = WiiUseApiManager.getWiimotes(1, true);
-		wiimote[0].addWiiMoteEventListeners(new MyWiiListener());
+		wiimote = WiiUseApiManager.getWiimotes(4, true);
+		for(int i = 0;i<wiimote.length;i++)
+			wiimote[i].addWiiMoteEventListeners(new MyWiiListener());
 	}
 	
 	public Wiimote[] getWiiMotes(){

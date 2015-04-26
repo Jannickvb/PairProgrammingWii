@@ -15,6 +15,8 @@ public class RemoteController {
 		wiimote = WiiUseApiManager.getWiimotes(4, true);
 		for(int i = 0;i<wiimote.length;i++)
 			wiimote[i].addWiiMoteEventListeners(new MyWiiListener());
+		if(wiimote.length == 0)
+			System.out.println("NO CONTROLLER CONNECTED");
 	}
 	
 	public Wiimote[] getWiiMotes(){

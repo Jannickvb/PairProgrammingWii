@@ -23,9 +23,11 @@ public class MyWiiListener implements WiimoteListener{
 	
 	private Wiimote[] wiimotes;
 	private GameController gameControl;
-	public MyWiiListener()
+	private GameStateManager gsm;
+	public MyWiiListener(GameStateManager gsm)
 	{
 		gameControl = GameController.instance;
+		this.gsm = gsm;
 //		this.wiimotes = WiiUseApiManager.getWiimotes(1, true);
 //		for(int i = 0; i < wiimotes.length; i++)
 //		{
@@ -54,10 +56,10 @@ public class MyWiiListener implements WiimoteListener{
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent e) {
 		if(e.isButtonDownJustPressed()){
-			System.out.println("wesley is een idioot");
+			gsm.back();
 		}
 		if(e.isButtonUpJustPressed()){
-			System.out.println("wesley is een faggot");
+			gsm.next();
 		}
 		if(e.isButtonLeftJustPressed()){
 			System.out.println("kut hardniksveld");

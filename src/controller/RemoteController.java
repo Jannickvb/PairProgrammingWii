@@ -1,7 +1,6 @@
 package controller;
 
-import javax.swing.JDialog;
-
+import view.GameFrame;
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 
@@ -9,12 +8,12 @@ public class RemoteController {
 
 	Wiimote[] wiimote;
 	MyWiiListener wiilistener;
-	public static final RemoteController instance = new RemoteController();
-	
-	public RemoteController(){
+	GameStateManager gsm;
+	public RemoteController(GameFrame frame){
+		this.gsm = frame.getGameStateManager();
 		wiimote = WiiUseApiManager.getWiimotes(4, true);
 		for(int i = 0;i<wiimote.length;i++)
-			wiimote[i].addWiiMoteEventListeners(new MyWiiListener());
+			wiimote[i].addWiiMoteEventListeners(new MyWiiListener(gsm));
 		if(wiimote.length == 0)
 			System.out.println("NO CONTROLLER CONNECTED");
 	}

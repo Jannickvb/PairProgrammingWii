@@ -103,7 +103,6 @@ public class MyWiiListener implements WiimoteListener{
 
 	@Override
 	public void onIrEvent(IREvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

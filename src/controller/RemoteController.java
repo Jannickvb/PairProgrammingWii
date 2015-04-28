@@ -15,6 +15,7 @@ public class RemoteController {
 		for(int i = 0;i<wiimote.length;i++){
 			wiimote[i].addWiiMoteEventListeners(new MyWiiListener(gsm));
 			wiimote[i].activateMotionSensing();
+			wiimote[i].activateIRTRacking();
 			}
 		if(wiimote.length == 0)
 			System.out.println("NO CONTROLLER CONNECTED");

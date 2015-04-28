@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Accelerometer;
 import model.GameState;
+import model.IrPanel;
 import model.NunchuckPreview;
 import model.SimonSays;
 import view.GameFrame;
@@ -18,6 +19,7 @@ public class GameStateManager {
 		gamestates.add(new SimonSays(frame));
 		gamestates.add(new Accelerometer(frame));
 		gamestates.add(new NunchuckPreview(frame));
+		gamestates.add(new IrPanel(frame));
 		currentState = gamestates.get(0);
 	}
 	
@@ -36,9 +38,13 @@ public class GameStateManager {
 		}
 		else if(currentState instanceof NunchuckPreview)
 		{
+			currentState = gamestates.get(3);
+		}
+		else if(currentState instanceof IrPanel)
+		{
 			currentState = gamestates.get(0);
 		}
-		else 
+		else
 		{
 			currentState = gamestates.get(0);
 		}
@@ -47,7 +53,7 @@ public class GameStateManager {
 	public void back() {
 		if(currentState instanceof SimonSays)
 		{
-			currentState = gamestates.get(2);
+			currentState = gamestates.get(3);
 		}
 		else if(currentState instanceof Accelerometer)
 		{
@@ -57,7 +63,11 @@ public class GameStateManager {
 		{
 			currentState = gamestates.get(1);
 		}
-		else 
+		else if(currentState instanceof IrPanel)
+		{
+			currentState = gamestates.get(2);
+		}
+		else
 		{
 			currentState = gamestates.get(0);
 		}

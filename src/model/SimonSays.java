@@ -11,10 +11,9 @@ import controller.GameController;
 public class SimonSays extends GameState{
 	private GameFrame frame;
 	private GameController gameControl;
-	private Color color;
-	private ArrayList<Color> simon;
 	private ArrayList<Integer> userInput;
 	private ArrayList<Integer> gameInput;
+	private boolean userIsEnabled;
 	public SimonSays(GameFrame frame){
 		super(frame);
 		gameControl = GameController.instance;

@@ -9,11 +9,12 @@ public class RemoteController {
 	Wiimote[] wiimote;
 	MyWiiListener wiilistener;
 	GameStateManager gsm;
+	private boolean sensorbarPos;
 	public RemoteController(GameFrame frame){
 		this.gsm = frame.getGameStateManager();
 		wiimote = WiiUseApiManager.getWiimotes(4, true);
 		for(int i = 0;i<wiimote.length;i++){
-			wiimote[i].addWiiMoteEventListeners(new MyWiiListener(gsm));
+			wiimote[i].addWiiMoteEventListeners(new MyWiiListener(frame));
 			wiimote[i].activateMotionSensing();
 			wiimote[i].activateIRTRacking();
 			wiimote[i].setSensorBarBelowScreen();
@@ -24,6 +25,24 @@ public class RemoteController {
 	
 	public Wiimote[] getWiiMotes(){
 		return wiimote;
+	}
+	
+	public void setSensorBarBelowScreen(){
+		for(Wiimote mote:wiimote){
+			mote.setSensorBarBelowScreen();
+		}
+		sensorbarPos = false;
+	}
+	
+	public boolean getSensorbarPos(){
+		return sensorbarPos;
+	}
+	
+	public void setSensorBarAboveScreen(){
+		for(Wiimote mote:wiimote){
+			mote.setSensorBarBelowScreen();
+		}
+		sensorbarPos = true;
 	}
 	
 	public MyWiiListener getListener()

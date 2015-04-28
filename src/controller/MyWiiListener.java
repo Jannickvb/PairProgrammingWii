@@ -4,6 +4,8 @@ import java.awt.geom.Point2D;
 
 import model.Accelerometer;
 import model.IrPanel;
+import model.NunchuckPreview;
+import view.GameFrame;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.JoystickEvent;
@@ -25,10 +27,12 @@ public class MyWiiListener implements WiimoteListener{
 	
 	private GameController gameControl;
 	private GameStateManager gsm;
-	public MyWiiListener(GameStateManager gsm)
+	private RemoteController rem;
+	public MyWiiListener(GameFrame frame)
 	{
 		gameControl = GameController.instance;
-		this.gsm = gsm;		
+		this.gsm = frame.getGameStateManager();
+		this.rem = frame.getRemoteController();
 	}
 
 	@Override
@@ -81,8 +85,23 @@ public class MyWiiListener implements WiimoteListener{
 			{
 				gameControl.setAngle((int)joystick.getAngle());
 			}
-			if(nunButtons.isButtonCJustPressed())
-				gameControl.toggleRotation();
+			if(gsm.getGameState() instanceof NunchuckPreview)
+			{
+				if(nunButtons.isButtonCJustPressed())
+					gameControl.toggleRotation();
+			}
+			if(gsm.getGameState() instanceof IrPanel)
+			{
+				if(nunButtons.isButtonZJustPressed())
+				{
+					rem.setSensorBarBelowScreen();
+				}
+					
+				if(nunButtons.isButtonCJustPressed())
+				{
+					rem.setSensorBarAboveScreen();
+				}
+			}
 				
 		}
 	}

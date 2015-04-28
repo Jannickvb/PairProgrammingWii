@@ -26,7 +26,7 @@ public class RemoteController {
 	public Wiimote[] getWiiMotes(){
 		return wiimote;
 	}
-	
+
 	public void setSensorBarBelowScreen(){
 		for(Wiimote mote:wiimote){
 			mote.setSensorBarBelowScreen();

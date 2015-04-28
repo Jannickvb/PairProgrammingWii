@@ -13,16 +13,29 @@ public class SimonSays extends GameState{
 	private GameController gameControl;
 	private ArrayList<Integer> userInput;
 	private ArrayList<Integer> gameInput;
-	private boolean userIsEnabled;
+	private int showTime, element;
 	public SimonSays(GameFrame frame){
 		super(frame);
 		gameControl = GameController.instance;
 		this.frame = frame;
+		this.userInput = new ArrayList<Integer>();
+		this.gameInput = new ArrayList<Integer>();
+		this.showTime = 0;
+		this.element = 0;
+		nextRound();
 	}
 	
 	public void draw(Graphics2D g2){
 		g2.drawString("1: Simon Says",0,10);
 		g2.drawString("Press UP/DOWN on the Wii remote to navigate", 0, 30);
+		if(gameControl.getUserInputEnabled())
+		{
+			g2.drawString("Your Turn: " + userInput.size(), frame.getWidth()/2, 10);
+		}
+		if(!gameControl.getUserInputEnabled())
+		{
+			g2.drawString(element + "", frame.getWidth()/2, 10);
+		}
 		AffineTransform tx = new AffineTransform();
 		tx.translate(frame.getWidth()/2,(frame.getHeight()/2)-25);
 		g2.transform(tx);
@@ -66,10 +79,89 @@ public class SimonSays extends GameState{
 		g2.fillRect(-100, -100, 100, 100);
 		
 	}
+	
+	public void setUserInput(ArrayList<Integer> userInput)
+	{
+		this.userInput = userInput;
+	}
+	
+	public ArrayList<Integer> getUserInput()
+	{
+		return userInput;
+	}
+	
+	public void gameover()
+	{
+		System.out.println("Game Over");
+		userInput.clear();
+		gameInput.clear();
+		element = 0;
+		showTime = 0;
+		nextRound();
+	}
+	
+	public void nextRound()
+	{
+		userInput.clear();
+		gameControl.setUserInputEnabled(false);
+		int x = 0;
+		while(x == 0)
+		{
+			x = (int) (Math.random()*4);
+		}
+		gameInput.add(x);
+	}
+	
+	public void showColors()
+	{
+		gameControl.setRekt(gameInput.get(element));
+	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		if(!gameControl.getUserInputEnabled() && gameInput.size() > 0){
+			if(showTime > 60)
+			{
+				showTime = 0;
+				if(element < gameInput.size())
+				{
+					showColors();
+					element++;
+				}
+				else
+				{
+					element = 0;
+					gameControl.setUserInputEnabled(true);
+					gameControl.setRekt(0);
+				}
+			}
+			else
+			{
+				showTime ++;
+			}
+		}
+		else if(gameControl.getUserInputEnabled() && gameControl.getPressed() && gameControl.getRekt() != 0 && gameInput.size() != userInput.size())
+		{
+			userInput.add(gameControl.getSelected());
+		}
+		else if(userInput.size() >= gameInput.size())
+		{
+			boolean gameover = false;
+			for(int i = 0; i < gameInput.size(); i++)
+			{
+				if(gameInput.get(i) != userInput.get(i))
+				{
+					gameover = true;
+				}
+			}
+			if(gameover)
+			{
+				gameover();
+			}
+			else
+			{
+				nextRound();
+			}
+		}
 	}
 }

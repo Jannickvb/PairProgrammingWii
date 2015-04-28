@@ -3,9 +3,11 @@ package controller;
 import java.awt.geom.Point2D;
 
 import model.Accelerometer;
+import model.SimonSays;
 import model.IrPanel;
 import model.NunchuckPreview;
 import view.GameFrame;
+import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.JoystickEvent;
@@ -25,6 +27,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class MyWiiListener implements WiimoteListener{
 	
+	private Wiimote[] wiimotes;
 	private GameController gameControl;
 	private GameStateManager gsm;
 	private RemoteController rem;
@@ -32,7 +35,7 @@ public class MyWiiListener implements WiimoteListener{
 	{
 		gameControl = GameController.instance;
 		this.gsm = frame.getGameStateManager();
-		this.rem = frame.getRemoteController();
+		this.rem = frame.getRemoteController();		
 	}
 
 	@Override
@@ -48,6 +51,12 @@ public class MyWiiListener implements WiimoteListener{
 		}
 		if(e.isButtonRightJustPressed()){
 			System.out.println("godverdomme wesley");
+		}
+		if(e.isButtonAJustPressed()){
+			if(gameControl.getUserInputEnabled())
+			{
+				gameControl.setRekt();
+			}
 		}
 	}
 
@@ -102,6 +111,8 @@ public class MyWiiListener implements WiimoteListener{
 					rem.setSensorBarAboveScreen();
 				}
 			}
+			if(nunButtons.isButtonCJustPressed())
+				gameControl.toggleRotation();
 				
 		}
 	}

@@ -3,8 +3,7 @@ package controller;
 import java.awt.geom.Point2D;
 
 import model.Accelerometer;
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-import wiiusej.Wiimote;
+import model.IrPanel;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.JoystickEvent;
@@ -24,7 +23,6 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class MyWiiListener implements WiimoteListener{
 	
-	private Wiimote[] wiimotes;
 	private GameController gameControl;
 	private GameStateManager gsm;
 	public MyWiiListener(GameStateManager gsm)
@@ -103,7 +101,12 @@ public class MyWiiListener implements WiimoteListener{
 
 	@Override
 	public void onIrEvent(IREvent e) {
-		
+		if(gsm.getGameState() instanceof IrPanel){
+			gameControl.setIrX(e.getAx());
+			gameControl.setIrY(e.getAy());
+			System.out.println("Ax:" + e.getAx() + "Ay:" + e.getAy());
+			System.out.println("X:" + e.getX() + "Y:" + e.getY());
+		}
 	}
 
 	@Override

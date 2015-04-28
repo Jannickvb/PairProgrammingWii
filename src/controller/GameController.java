@@ -8,7 +8,7 @@ import java.util.List;
 public class GameController {
 	
 	public final static GameController instance = new GameController();
-	private int angle,rekt,roll,ySpeed;
+	private int angle,rekt,roll,ySpeed,irX,irY;
 	private double magnitude;
 	private boolean viewRotation = false;
 	private ArrayList<Point2D> x,y,z;
@@ -102,4 +102,17 @@ public class GameController {
 	public void setYSpeed(int ySpeed) {
 		this.ySpeed = ySpeed;
 	}
+	public int getIrX(){
+		return irX;
+	}
+	public int getIrY(){
+		return irY;
+	}
+	public void setIrX(int irX){
+		this.irX = irX;
+	}
+	public void setIrY(int irY){
+		this.irY = irY;
+	}
+	
 }

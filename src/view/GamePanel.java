@@ -57,19 +57,4 @@ public class GamePanel extends JPanel implements ActionListener{
 	public GameFrame getFrame(){
 		return frame;
 	}
-	
-	
-	BufferedImage loadImage(String fileName)
-	{
-		BufferedImage img = null;
-
-		try {
-			img = ImageIO.read(new File(fileName));
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		return img;
-	}
 }

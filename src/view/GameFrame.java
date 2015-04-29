@@ -19,9 +19,10 @@ public class GameFrame extends JFrame{
 		setMinimumSize(new Dimension(600,400));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
-		gsm = new GameStateManager(this);
-		rem = new RemoteController(this);
-		gamePanel = new GamePanel(this);
+		GameFrame frame = this;
+		this.gsm = new GameStateManager(frame);
+		this.rem = new RemoteController(frame);
+		gamePanel = new GamePanel(frame);
 		setContentPane(gamePanel);
 		setLocationRelativeTo(null);
 		setVisible(true);

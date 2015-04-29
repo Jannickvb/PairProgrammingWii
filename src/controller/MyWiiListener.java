@@ -27,15 +27,16 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class MyWiiListener implements WiimoteListener{
 	
-	private Wiimote[] wiimotes;
 	private GameController gameControl;
 	private GameStateManager gsm;
 	private RemoteController rem;
+	private GameFrame frame;
 	public MyWiiListener(GameFrame frame)
 	{
+		this.frame = frame;
 		gameControl = GameController.instance;
-		this.gsm = frame.getGameStateManager();
-		this.rem = frame.getRemoteController();		
+		this.gsm = this.frame.getGameStateManager();
+		this.rem = this.frame.getRemoteController();
 	}
 
 	@Override
@@ -47,10 +48,10 @@ public class MyWiiListener implements WiimoteListener{
 			gsm.next();
 		}
 		if(e.isButtonLeftJustPressed()){
-			System.out.println("kut hardniksveld");
+			System.out.println("left");
 		}
 		if(e.isButtonRightJustPressed()){
-			System.out.println("godverdomme wesley");
+			System.out.println("right");
 		}
 		if(e.isButtonAJustPressed()){
 			if(gameControl.getUserInputEnabled())
@@ -103,12 +104,20 @@ public class MyWiiListener implements WiimoteListener{
 			{
 				if(nunButtons.isButtonZJustPressed())
 				{
-					rem.setSensorBarBelowScreen();
+					try{
+						rem.setSensorBarBelowScreen();
+					}catch(NullPointerException np){
+						System.out.println("null");
+					}
 				}
 					
 				if(nunButtons.isButtonCJustPressed())
 				{
-					rem.setSensorBarAboveScreen();
+					try{
+						rem.setSensorBarAboveScreen();
+					}catch(NullPointerException np){
+						System.out.println("null");
+					}
 				}
 			}
 			if(nunButtons.isButtonCJustPressed())
@@ -134,8 +143,6 @@ public class MyWiiListener implements WiimoteListener{
 		if(gsm.getGameState() instanceof IrPanel){
 			gameControl.setIrX(e.getAx());
 			gameControl.setIrY(e.getAy());
-			System.out.println("Ax:" + e.getAx() + "Ay:" + e.getAy());
-			System.out.println("X:" + e.getX() + "Y:" + e.getY());
 		}
 	}
 

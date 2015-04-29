@@ -128,9 +128,6 @@ public class GameController {
 			viewRotation = true;
 	}
 
-	public void setYSpeed(int ySpeed) {
-		this.ySpeed = ySpeed;
-	}
 	public int getIrX(){
 		return irX;
 	}

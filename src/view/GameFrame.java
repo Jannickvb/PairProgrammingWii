@@ -32,10 +32,10 @@ public class GameFrame extends JFrame{
 		return gsm;
 	}
 	
-	public RemoteController getRemoteController(){
+	public RemoteController getRem() {
 		return rem;
 	}
-	
+
 	public GamePanel getGamePanel(){
 		return gamePanel;
 	}

@@ -31,12 +31,12 @@ public class MyWiiListener implements WiimoteListener{
 	private GameStateManager gsm;
 	private RemoteController rem;
 	private GameFrame frame;
-	public MyWiiListener(GameFrame frame)
+	public MyWiiListener(GameFrame frame, RemoteController rem)
 	{
 		this.frame = frame;
 		gameControl = GameController.instance;
 		this.gsm = this.frame.getGameStateManager();
-		this.rem = this.frame.getRemoteController();
+		this.rem = rem;
 	}
 
 	@Override
@@ -104,20 +104,12 @@ public class MyWiiListener implements WiimoteListener{
 			{
 				if(nunButtons.isButtonZJustPressed())
 				{
-					try{
 						rem.setSensorBarBelowScreen();
-					}catch(NullPointerException np){
-						System.out.println("null");
-					}
 				}
 					
 				if(nunButtons.isButtonCJustPressed())
 				{
-					try{
 						rem.setSensorBarAboveScreen();
-					}catch(NullPointerException np){
-						System.out.println("null");
-					}
 				}
 			}
 			if(nunButtons.isButtonCJustPressed())

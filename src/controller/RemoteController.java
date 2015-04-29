@@ -16,7 +16,7 @@ public class RemoteController {
 		this.gsm = frame.getGameStateManager();
 		wiimote = WiiUseApiManager.getWiimotes(4, true);
 		for(int i = 0;i<wiimote.length;i++){
-			wiimote[i].addWiiMoteEventListeners(new MyWiiListener(this.frame));
+			wiimote[i].addWiiMoteEventListeners(new MyWiiListener(this.frame,this));
 			wiimote[i].activateMotionSensing();
 			wiimote[i].activateIRTRacking();
 			wiimote[i].setSensorBarBelowScreen();

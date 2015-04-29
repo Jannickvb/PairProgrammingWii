@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		gameControl = GameController.instance;
 		
 		this.frame = frame;
-		this.rem = frame.getRemoteController();
+		this.rem = frame.getRem();
 		this.gsm = frame.getGameStateManager();
 		Timer timer = new Timer(1000/60, this);
 		timer.start();

@@ -31,11 +31,12 @@ public class IrPanel extends GameState{
 	public void update() {
 		this.x = gameControl.getIrX();
 		this.y = gameControl.getIrY();
-		if(frame.getRemoteController().getSensorbarPos() == false){
-			barStatus = "Below Screen";
-		}else{
-			barStatus = "Above screen";
-		}
+		if(frame.getRem()!=null)
+			if(frame.getRem().getSensorbarPos() == false){
+				barStatus = "Below Screen";
+			}else{
+				barStatus = "Above screen";
+			}
 	}
 
 }

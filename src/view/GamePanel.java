@@ -1,20 +1,15 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import model.SimonSays;
 import controller.GameController;
 import controller.GameStateManager;
 import controller.RemoteController;
@@ -33,6 +28,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		this.frame = frame;
 		this.rem = frame.getRem();
 		this.gsm = frame.getGameStateManager();
+		this.setBackground(Color.white);
 		Timer timer = new Timer(1000/60, this);
 		timer.start();
 	}

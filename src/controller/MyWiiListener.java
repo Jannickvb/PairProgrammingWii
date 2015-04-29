@@ -112,9 +112,6 @@ public class MyWiiListener implements WiimoteListener{
 						rem.setSensorBarAboveScreen();
 				}
 			}
-			if(nunButtons.isButtonCJustPressed())
-				gameControl.toggleRotation();
-				
 		}
 	}
 

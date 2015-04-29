@@ -14,6 +14,7 @@ public class GameStateManager {
 	private ArrayList<GameState> gamestates;
 	private GameFrame frame;
 	private GameState currentState;
+	private GameController gameControl = GameController.instance;
 	public GameStateManager(GameFrame frame){
 		gamestates = new ArrayList<GameState>();
 		this.frame = frame;
@@ -33,6 +34,7 @@ public class GameStateManager {
 		if(currentState instanceof SimonSays)
 		{
 			currentState = gamestates.get(1);
+			gameControl.setUserInputEnabled(true);
 		}
 		else if(currentState instanceof Accelerometer)
 		{
@@ -48,10 +50,12 @@ public class GameStateManager {
 		}
 		else if(currentState instanceof IrPanel)
 		{
+			gameControl.setUserInputEnabled(false);
 			currentState = gamestates.get(0);
 		}
 		else
 		{
+			gameControl.setUserInputEnabled(false);
 			currentState = gamestates.get(0);
 		}
 	}
@@ -59,10 +63,12 @@ public class GameStateManager {
 	public void back() {
 		if(currentState instanceof SimonSays)
 		{
+			gameControl.setUserInputEnabled(true);
 			currentState = gamestates.get(4);
 		}
 		else if(currentState instanceof Accelerometer)
 		{
+			gameControl.setUserInputEnabled(false);
 			currentState = gamestates.get(0);
 		}
 		else if(currentState instanceof SwingTestWii)
@@ -79,6 +85,7 @@ public class GameStateManager {
 		}
 		else
 		{
+			gameControl.setUserInputEnabled(false);
 			currentState = gamestates.get(0);
 		}
 	}

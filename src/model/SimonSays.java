@@ -36,47 +36,59 @@ public class SimonSays extends GameState{
 		{
 			g2.drawString(element + "", frame.getWidth()/2, 10);
 		}
+		if(!gameControl.getSimon()){
+			g2.setColor(Color.RED);
+			g2.fillRect(0, 40, 150, 30);
+			g2.setColor(Color.white);
+			g2.drawString("PRESS 1 TO START", 10, 60);
+		}else{
+			g2.setColor(Color.GREEN);
+			g2.fillRect(0, 40, 150, 30);
+			g2.setColor(Color.white);
+			g2.drawString("GAME IS RUNNING", 10, 60);
+		}
+		g2.setColor(Color.BLACK);
 		AffineTransform tx = new AffineTransform();
 		tx.translate(frame.getWidth()/2,(frame.getHeight()/2)-25);
 		g2.transform(tx);
-		g2.drawLine(0, -frame.getHeight()/2, 0, frame.getHeight()/2);
-		g2.drawLine(-frame.getWidth()/2,0,frame.getWidth()/2,0);
+		g2.setColor(new Color(30,30,30));
+		g2.fillRect(-155, -155, 310, 310);
 		if(gameControl.getRekt() == 2)
 		{
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.BLUE.darker());
 		}
 		else
 		{
 			g2.setColor(Color.BLUE);
 		}
-		g2.fillRect(0, 0, 100, 100);
+		g2.fillRect(0, 0, 150, 150);
 		if(gameControl.getRekt() == 3)
 		{
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.YELLOW.darker());
 		}
 		else
 		{
 			g2.setColor(Color.YELLOW);
 		}
-		g2.fillRect(-100, 0, 100, 100);
+		g2.fillRect(-150, 0, 150, 150);
 		if(gameControl.getRekt() == 1)
 		{
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.RED.darker());
 		}
 		else
 		{
 			g2.setColor(Color.RED);
 		}
-		g2.fillRect(0, -100, 100, 100);
+		g2.fillRect(0, -150, 150, 150);
 		if(gameControl.getRekt() == 4)
 		{
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.GREEN.darker());
 		}
 		else
 		{
 			g2.setColor(Color.GREEN);
 		}
-		g2.fillRect(-100, -100, 100, 100);
+		g2.fillRect(-150, -150, 150, 150);
 		
 	}
 	
@@ -92,12 +104,13 @@ public class SimonSays extends GameState{
 	
 	public void gameover()
 	{
-		System.out.println("Game Over");
+		System.out.println("Game Restart");
 		userInput.clear();
 		gameInput.clear();
 		element = 0;
 		showTime = 0;
-		nextRound();
+		if(!gameControl.getSimon())
+			nextRound();
 	}
 	
 	public void nextRound()
@@ -119,6 +132,11 @@ public class SimonSays extends GameState{
 
 	@Override
 	public void update() {
+		if(gameControl.getSimon())
+			updateGame();
+	}
+	
+	public void updateGame(){
 		if(!gameControl.getUserInputEnabled() && gameInput.size() > 0){
 			if(showTime > 60)
 			{
@@ -147,16 +165,17 @@ public class SimonSays extends GameState{
 		}
 		else if(userInput.size() >= gameInput.size())
 		{
-			boolean gameover = false;
+			gameControl.setSimon(true);
 			for(int i = 0; i < gameInput.size(); i++)
 			{
 				if(gameInput.get(i) != userInput.get(i))
 				{
-					gameover = true;
+					gameControl.setSimon(false);
 				}
 			}
-			if(gameover)
+			if(!gameControl.getSimon())
 			{
+				gameControl.setSimon(false);
 				gameover();
 			}
 			else

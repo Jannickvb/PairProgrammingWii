@@ -8,11 +8,10 @@ import java.util.List;
 public class GameController {
 	
 	public final static GameController instance = new GameController();
-	private int angle,rekt,roll,ySpeed, irX, irY;
+	private int angle,rekt,roll,ySpeed, irX, irY,acceleration;
 	private double magnitude;
-	private boolean viewRotation = false;
-	private boolean userInputEnabled = false;
-	private boolean aPressed = false;
+	private boolean viewRotation,userInputEnabled,aPressed,simon = false;
+
 	private ArrayList<Point2D> x,y,z;
 	public GameController(){
 		this.x = new ArrayList<Point2D>();
@@ -152,5 +151,19 @@ public class GameController {
 	
 	public void setYSpeed(int ySpeed) {
 		this.ySpeed = ySpeed;
+	}
+	public boolean getSimon(){
+		return simon;
+	}
+	public void setSimon(boolean simon){
+		this.simon = simon;
+	}
+
+	public int getAcceleration() {
+		return acceleration;
+	}
+
+	public void setAcceleration(int acceleration) {
+		this.acceleration = acceleration;
 	}
 }

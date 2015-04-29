@@ -16,7 +16,7 @@ public class GameFrame extends JFrame{
 		super("Wiiiiiiiiii");
 		
 		setPreferredSize(new Dimension(800,600));
-		setMinimumSize(new Dimension(600,400));
+		setMinimumSize(new Dimension(600,600));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		GameFrame frame = this;

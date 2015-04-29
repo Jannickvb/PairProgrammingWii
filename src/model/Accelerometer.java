@@ -53,7 +53,6 @@ public class Accelerometer extends GameState{
 			try{
 				nextP = list.get(i+1);
 			}catch(IndexOutOfBoundsException e){
-				System.out.println("GODVERDOMME WESLEY JE VERNEUKT T WEER");
 				nextP = currentP;
 			}
 			g2.draw(new Line2D.Float(currentP, nextP));

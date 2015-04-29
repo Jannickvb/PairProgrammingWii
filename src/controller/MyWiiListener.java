@@ -3,11 +3,11 @@ package controller;
 import java.awt.geom.Point2D;
 
 import model.Accelerometer;
-import model.SimonSays;
 import model.IrPanel;
 import model.NunchuckPreview;
+import model.SimonSays;
+import model.SwingTestWii;
 import view.GameFrame;
-import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.JoystickEvent;
@@ -53,25 +53,38 @@ public class MyWiiListener implements WiimoteListener{
 		if(e.isButtonRightJustPressed()){
 			System.out.println("right");
 		}
-		if(e.isButtonAJustPressed()){
-			if(gameControl.getUserInputEnabled())
-			{
-				gameControl.setRekt();
+		if(e.isButtonAJustPressed() && e.isButtonBJustPressed())
+			System.exit(0);
+		if(gsm.getGameState() instanceof SimonSays){
+			if(e.isButtonAJustPressed()){
+				if(gameControl.getUserInputEnabled())
+				{
+					gameControl.setRekt();
+				}
 			}
+			if(e.isButtonOneJustPressed())
+				gameControl.setSimon(true);
+			if(e.isButtonTwoJustPressed()){
+				SimonSays simon = (SimonSays) gsm.getGameState();
+				simon.gameover();
+				gameControl.setSimon(false);
+			}
+				
 		}
+			
 	}
 
 	@Override
 	public void onClassicControllerInsertedEvent(
 			ClassicControllerInsertedEvent e) {
-		
+		System.out.println("controller connected");
 		
 	}
 
 	@Override
 	public void onClassicControllerRemovedEvent(
 			ClassicControllerRemovedEvent e) {
-		// TODO Auto-generated method stub
+		System.out.println("controller removed");
 		
 	}
 
@@ -143,19 +156,21 @@ public class MyWiiListener implements WiimoteListener{
 			gameControl.getY().add(new Point2D.Double(gameControl.getYSpeed(), e.getRawAcceleration().getY()-130));	
 			gameControl.getZ().add(new Point2D.Double(gameControl.getYSpeed(), e.getRawAcceleration().getZ()-130));	
 		}
+		if(gsm.getGameState() instanceof SwingTestWii){
+			gameControl.setAcceleration(e.getRawAcceleration().getX());
+		}
 	}
 		
 
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent e) {
-		// TODO Auto-generated method stub
+		System.out.println("Nunchuck inserted");
 		
 	}
 
 	@Override
 	public void onNunchukRemovedEvent(NunchukRemovedEvent e) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Nunchuck removed");
 	}
 
 	@Override

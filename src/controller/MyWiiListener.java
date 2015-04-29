@@ -93,7 +93,8 @@ public class MyWiiListener implements WiimoteListener{
 			gameControl.setMagnitude(joystick.getMagnitude());
 			if(joystick.getMagnitude() > 0.3)
 			{
-				gameControl.setAngle((int)joystick.getAngle());
+				if(gameControl.getUserInputEnabled())
+					gameControl.setAngle((int)joystick.getAngle());
 			}
 			if(gsm.getGameState() instanceof NunchuckPreview)
 			{

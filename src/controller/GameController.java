@@ -22,31 +22,33 @@ public class GameController {
 	}
 	
 	public int getRekt(){
-		if(angle > 0 && angle < 90)
-    	{
-    		rekt = 1;
-    	}
-    	if(angle > 90 && angle < 180)
-    	{
-    		rekt = 2;
-    	}
-    	if(angle > 180 && angle < 270)
-    	{
-    		rekt = 3;
-    	}
-    	if(angle > 270 && angle < 360)
-    	{
-    		rekt = 4;
-    	}
-		return rekt;
+		if(userInputEnabled){
+			if(angle > 0 && angle < 90)
+	    	{
+	    		rekt = 1;
+	    	}
+	    	if(angle > 90 && angle < 180)
+	    	{
+	    		rekt = 2;
+	    	}
+	    	if(angle > 180 && angle < 270)
+	    	{
+	    		rekt = 3;
+	    	}
+	    	if(angle > 270 && angle < 360)
+	    	{
+	    		rekt = 4;
+	    	}
+		}
+	    return rekt;
 	}
-	public void setRekt(int rekt){
+	public void setRekt(int i){
 		if(rekt<0)
-			this.rekt = 0;
+			rekt = 0;
 		else if(rekt>4)
-			this.rekt = 4;
+			rekt = 4;
 		else
-			this.rekt = rekt;
+			rekt = i;
 	}
 	
 	public void setRekt()

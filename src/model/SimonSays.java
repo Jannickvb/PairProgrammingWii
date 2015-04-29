@@ -107,9 +107,9 @@ public class SimonSays extends GameState{
 		int x = 0;
 		while(x == 0)
 		{
-			x = (int) (Math.random()*4);
+			x = (int) (Math.random()*5);
 		}
-		gameInput.add(x);
+		gameInput.add(x); //voegt een (random) nieuwe toe
 	}
 	
 	public void showColors()
@@ -122,6 +122,7 @@ public class SimonSays extends GameState{
 		if(!gameControl.getUserInputEnabled() && gameInput.size() > 0){
 			if(showTime > 60)
 			{
+				//tekent de elementen (kleuren) 1 keer per seconde
 				showTime = 0;
 				if(element < gameInput.size())
 				{
